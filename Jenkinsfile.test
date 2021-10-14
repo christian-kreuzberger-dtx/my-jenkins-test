@@ -5,6 +5,7 @@ node {
     properties([
         parameters([
          string(defaultValue: '', description: 'Keptn Context ID', name: 'shkeptncontext', trim: false), 
+         string(defaultValue: '', description: 'Triggered ID', name: 'triggeredid', trim: false), 
          string(defaultValue: 'qgproject', description: 'Name of your Keptn Project', name: 'Project', trim: false), 
          string(defaultValue: 'qualitystage', description: 'Stage of your Keptn project where tests are triggered in', name: 'Stage', trim: false), 
          string(defaultValue: 'evalservice', description: 'Servicename of the service that is tested', name: 'Service', trim: false),
@@ -33,7 +34,7 @@ node {
 
     stage('Send Finished Event Back to Keptn') {
         // Send Finished Event back
-        def keptnContext = keptn.sendFinishedEvent eventType: "test", keptnContext:"${params.shkeptncontext}", result:"pass", status:"succeeded"
+        def keptnContext = keptn.sendFinishedEvent eventType: "test", keptnContext: "${params.shkeptncontext}", triggeredId: "${params.triggeredid}", result:"pass", status:"succeeded"
         String keptn_bridge = env.KEPTN_BRIDGE
         echo "Open Keptns Bridge: ${keptn_bridge}/trace/${keptnContext}"
     }
