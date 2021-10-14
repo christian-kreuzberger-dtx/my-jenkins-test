@@ -36,11 +36,11 @@ node {
 
     stage('Initialize Keptn') {
         // Initialize the Keptn Project - ensures the Keptn Project is created with the passed shipyard
-        keptn.keptnInit project:"${params.Project}", service:"${params.Service}", stage:"${params.Stage}", monitoring:"${monitoring}" // , shipyard:'shipyard.yaml'
+        keptn.keptnInit project:"${params.Project}", service:"${params.Service}", stage:"${params.Stage}", monitoring:"${monitoring}" , shipyard:'keptn/shipyard.yaml'
 
-        // UPload quality gate files
-        keptn.keptnAddResources('keptn/dynatrace/dynatrace.conf.yaml','dynatrace/dynatrace.conf.yaml')
-        keptn.keptnAddResources('keptn/dynatrace/sli.yaml','dynatrace/sli.yaml')
+        // Upload quality gate files
+        //keptn.keptnAddResources('keptn/dynatrace/dynatrace.conf.yaml','dynatrace/dynatrace.conf.yaml')
+        //keptn.keptnAddResources('keptn/dynatrace/sli.yaml','dynatrace/sli.yaml')
         keptn.keptnAddResources('keptn/slo.yaml','slo.yaml')
     }
     stage('Trigger Quality Gate') {
