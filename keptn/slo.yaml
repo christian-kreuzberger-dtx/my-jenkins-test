@@ -22,16 +22,6 @@ objectives:
     pass:
       - criteria:
           - "<1"
-  - sli: "memory_usage"
-    pass:
-      - criteria:
-          - "<=+10%" 
-    warning:
-      - criteria:
-          - "<=+25%"
-  - sli: "throughput"
-  - sli: "cpu_time"
-  - sli: "io_time"
 total_score:
   pass: "90%"
   warning: "75%"
