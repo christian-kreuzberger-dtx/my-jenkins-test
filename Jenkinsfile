@@ -1,12 +1,20 @@
 @Library('keptn-library@5.0')_
 def keptn = new sh.keptn.Keptn()
 
-node {
+
+node('jenkins-slave') {
+
     def commit_id
 
     def project = "nodejs-example"
     def service = "hello-service"
     def firststage = "dev"
+
+    stage('unit-tests') {
+        sh(script: """
+            docker run --rm alpine /bin/sh -c "echo hello world"
+        """)
+    }
 
     stage('Preparation') {
         checkout scm
