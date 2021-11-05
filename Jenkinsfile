@@ -6,7 +6,7 @@ node {
 
     def project = "nodejs-example"
     def service = "hello-service"
-    def stage = "dev"
+    def firststage = "dev"
 
     stage('Preparation') {
         checkout scm
@@ -29,12 +29,19 @@ node {
 
     stage('Initialize Keptn') {
         // Initialize the Keptn Project - ensures the Keptn Project is created with the passed shipyard
-        keptn.keptnInit project:"${project}", service:"${service}", stage:"${stage}"
+        keptn.keptnInit project:"${project}", service:"${service}", stage:"${firststage}", monitoring: "dynatrace", shipyard: ".keptn/shipyard.yaml"
 
         // Upload quality gate files
         //keptn.keptnAddResources('keptn/dynatrace/dynatrace.conf.yaml','dynatrace/dynatrace.conf.yaml')
+        // Upload SLI and SLO files
         keptn.keptnAddResources('.keptn/dynatrace/sli.yaml','dynatrace/sli.yaml')
         keptn.keptnAddResources('.keptn/slo.yaml','slo.yaml')
+
+        // Create Helm Chart .tgz
+        sh 'tar cfvz .keptn/helm/hello-service.tgz .keptn/helm/hello-service'
+
+        // Add Helm Chart for hello-service
+        keptn.keptnAddResources('.keptn/helm/hello-service.tgz', 'helm/hello-service.tgz')
     }
 
     stage('Trigger Delivery') {
