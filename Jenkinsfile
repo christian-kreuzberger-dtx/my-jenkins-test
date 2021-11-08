@@ -60,7 +60,7 @@ node('jenkins-slave') {
 
     stage('Wait for Result') {
         echo "Waiting until Keptn is done and returns the results"
-        def result = keptn.waitForEvaluationDoneEvent setBuildResult:true, waitTime:waitTime
+        def result = keptn.waitForEvaluationDoneEvent setBuildResult:true, waitTime:5
         echo "${result}"
     }
 }
