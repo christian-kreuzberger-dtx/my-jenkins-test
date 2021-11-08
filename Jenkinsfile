@@ -1,4 +1,4 @@
-@Library('keptn-library@5.0')_
+@Library('keptn-library@bug/54/sendDeliveryTriggered')_
 def keptn = new sh.keptn.Keptn()
 
 
@@ -6,15 +6,11 @@ node('jenkins-slave') {
 
     def commit_id
 
+    def image_name = "christiankreuzbergerdtx/docker-nodejs-demo"
+
     def project = "nodejs-example"
     def service = "hello-service"
     def firststage = "dev"
-
-    stage('unit-tests') {
-        sh(script: """
-            docker run --rm alpine /bin/sh -c "echo hello world"
-        """)
-    }
 
     stage('Preparation') {
         checkout scm
@@ -31,7 +27,7 @@ node('jenkins-slave') {
 
     stage('Docker build/push') {
       docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-        def app = docker.build("christiankreuzbergerdtx/docker-nodejs-demo:${commit_id}", '.').push()
+        def app = docker.build("${image_name}:${commit_id}", '.').push()
       }
     }
 
@@ -53,7 +49,7 @@ node('jenkins-slave') {
     }
 
     stage('Trigger Delivery') {
-        def keptnContext = keptn.sendDeliveryTriggeredEvent image:"christiankreuzbergerdtx/docker-nodejs-demo:${commit_id}"
+        def keptnContext = keptn.sendDeliveryTriggeredEvent image:"${image_name}:${commit_id}"
         String keptn_bridge = env.KEPTN_BRIDGE
         echo "Open Keptns Bridge: ${keptn_bridge}/trace/${keptnContext}"
     }
