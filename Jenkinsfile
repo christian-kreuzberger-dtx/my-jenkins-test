@@ -31,10 +31,12 @@ node('jenkins-slave') {
       }
     }
 
-    stage('Initialize Keptn') {
+    stage('Initialize Keptn Project') {
         // Initialize the Keptn Project - ensures the Keptn Project is created with the passed shipyard
         keptn.keptnInit project:"${project}", service:"${service}", stage:"${firststage}", monitoring: "dynatrace", shipyard: ".keptn/shipyard.yaml"
+    }
 
+    stage('Add files to Keptn Project') {
         // Upload quality gate files
         //keptn.keptnAddResources('keptn/dynatrace/dynatrace.conf.yaml','dynatrace/dynatrace.conf.yaml')
         // Upload SLI and SLO files
