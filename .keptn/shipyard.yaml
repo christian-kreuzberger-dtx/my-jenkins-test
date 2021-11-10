@@ -17,10 +17,10 @@ spec:
             - name: "evaluation"
 
     - name: "hardening"
-      triggeredOn:
-        - event: "dev.delivery.finished"
       sequences:
         - name: "delivery"
+          triggeredOn:
+            - event: "dev.delivery.finished"
           tasks:
             - name: "deployment"
               properties:

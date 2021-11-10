@@ -41,8 +41,8 @@ node('jenkins-slave') {
         keptn.keptnAddResources('.keptn/dynatrace/sli.yaml','dynatrace/sli.yaml')
         keptn.keptnAddResources('.keptn/slo.yaml','slo.yaml')
 
-        // Create Helm Chart .tgz
-        sh 'tar cfvz .keptn/helm/hello-service.tgz .keptn/helm/hello-service'
+        // Package Helm Chart .tgz
+        sh 'tar -cvzf .keptn/helm/hello-service.tgz -C .keptn/helm/ hello-service'
 
         // Add Helm Chart for hello-service
         keptn.keptnAddResources('.keptn/helm/hello-service.tgz', 'helm/hello-service.tgz')
