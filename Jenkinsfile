@@ -1,4 +1,4 @@
-@Library('keptn-library@bug/54/sendDeliveryTriggered')_
+@Library('keptn-library')_
 def keptn = new sh.keptn.Keptn()
 
 
