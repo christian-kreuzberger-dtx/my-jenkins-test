@@ -1,4 +1,4 @@
-@Library('keptn-library')_
+@Library('keptn-library@5.1')_
 def keptn = new sh.keptn.Keptn()
 
 
@@ -48,6 +48,8 @@ node('jenkins-slave') {
 
         // Add Helm Chart for hello-service
         keptn.keptnAddResources('.keptn/helm/hello-service.tgz', 'helm/hello-service.tgz')
+        // ToDo: Add helm chart for other stages too
+        // Depends on https://github.com/keptn-sandbox/keptn-jenkins-library/issues/60
     }
 
     stage('Trigger Delivery') {
